@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>vue_04</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+	<div id="check">
+		<select v-model="selected">
+			<option disabled value="">Please select one</option>
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<span>선택 : {{selected}}</span>
+	</div>
+	<script>
+		var vm = new Vue({
+			el:'#check',
+			data:{
+				selected : ""
+			}
+		});
+	</script>
+</body>
+</html>

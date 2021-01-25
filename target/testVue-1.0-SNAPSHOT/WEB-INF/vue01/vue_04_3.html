@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Vue_04_3</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+	<div id="check">
+		<span>여러 줄을 가지는 메세지 : </span>
+		<p style="white-space:pre-line" >{{message}}</p>
+		<br>
+		<textarea v-model="message"></textarea>
+	</div>
+	<script>
+		var vue = new Vue({
+			el:"#check",
+			data:{message:""}
+		});
+	</script>
+</body>
+</html>

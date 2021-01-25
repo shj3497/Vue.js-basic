@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue02_01</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="example">
+        <p>원본 메세지 : {{message}}</p>
+        <p>뒤집힌 메세지 : {{reverseMessage}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#example",
+            data:{message:"안녕하세요"},
+            computed:{
+                reverseMessage:function(){
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

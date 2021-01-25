@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Vue_05</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+	<!-- 
+		v-if : 조건이 부합되지 않으면 렌더링을 하지 않음 >> 주석처리를 한다.
+		v-show : 일단 HTML 요소를 렌더링 한후
+				 display 스타일 속으로 화면에 보여줄지 여부를 결정
+				 >>> display:none 처리를 한다.
+	 -->
+	<div id="account">
+		예금액 : <input type="text" v-model="amount">
+		<img v-if="amount < 0" src="/testVue/img/error.png" 
+			 title="마이너스는 허용하지 않습니다."
+			 style="width:15px; height:15px; vertical-align:middle">
+	</div>
+	<script>
+		var vue = new Vue({
+			el : "#account",
+			data : {
+				amount : ""
+			}
+		})
+	</script>
+</body>
+</html>

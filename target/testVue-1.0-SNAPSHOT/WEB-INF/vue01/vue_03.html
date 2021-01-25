@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Vue_03</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+
+<!-- v-bind : 단방향 데이터 바인딩 -->
+<!-- v-model : 양방향 데이터 바인딩 -->
+
+	<div id="abc">
+		<input type="text" v-model="name" placeholder="이름을 입력하세요"><br>
+		<label>입력된 이름 v-html :</label><h3 v-html="name"></h3>
+		<label>입력된 이름 v-text :</label><h3 v-text="name"></h3>
+		<label>입력된 이름 '{{}}':</label><h3>{{name}}</h3> 
+	</div>
+	<div id="def">
+		<input type="text" v-model="pw" placeholder="pw를 입력하세요">
+		<label>인력된 pw</label><h3>{{pw}}</h3>
+	</div>
+	<script>
+	/*
+		var model = {name : ""}
+		var simple = new Vue({
+			el : "#abc",
+			data : model
+		});
+	*/
+	
+	// new Vue() : 컴포넌트 : 최상위 컴포넌트 : Root 컴포넌트
+		var simple = new Vue({
+			el : "#abc",
+			data : {name : ""}
+		});
+	
+		var pw = new Vue({
+			el : "#def",
+			data : {pw : ""}
+		})
+		
+	</script>
+</body>
+</html>
