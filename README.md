@@ -1,2 +1,2 @@
 # testVue
-## Vue.js에 대한 기본적인 
+## Vue.js에 대한 기본적인 연습
