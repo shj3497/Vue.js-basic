@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Vue_02</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<!-- v-bind를 단방향 디렉티브라고 한다. -->
+	<div id="simple">
+		<input type="text" id="a" v-bind:value="message">
+		<br>
+		<img v-bind:src="imagePath">
+		<br>
+		<img v-bind:src="imagePath1">
+		<br>
+		<img v-bind:src="imagePath2">
+	</div>
+	
+	
+	<script>
+		var model = {
+				message:'v-bind 디렉티브',
+				imagePath:'https://image.news1.kr/system/photos/2020/2/25/4071504/article.jpg',
+				imagePath1:'/testVue/img/14당황.png',
+				imagePath2:'/testVue/img/44최악.png'
+		}
+		
+		var simple = new Vue({
+			el:'#simple',
+			data:model
+		});
+		
+	</script>
+</body>
+</html>

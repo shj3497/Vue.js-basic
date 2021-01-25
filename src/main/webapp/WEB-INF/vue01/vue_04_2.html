@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Vue_04_2</title>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+<body>
+	<div id="check">
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>선택 : {{picked}}</span>
+	</div>
+	<!--  
+	 	그러니까 이 함수는 div의 아이디값을 찾아가서 v-model=""로 선언 된 곳에서 사용하는거니까
+		하나의 div 태그당 새로운 함수를 만들어서 사용하면 되곘구만
+	-->
+	<script>
+		var vue = new Vue({
+			el : '#check',
+			data : {picked : ""}
+		});
+	</script>
+</body>
+</html>
