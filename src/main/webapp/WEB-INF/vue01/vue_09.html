@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue_09</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <!--
+        v-pre : 탬플릿 문자열을 컴파일 하지 않고 그대로 보기
+        v-once : 한번만 렌더링 : 초기값이 주어지면 변경되지 않는 UI를 만들 때
+     -->
+    <div id="example">
+        <span v-pre>{{message}}</span><br>
+        <span v-once>{{message}}</span><br>
+        <span>{{message}}</span><br>
+        {{sayHello()}}
+    </div>
+    <script>
+        var simple = new Vue({
+            el : "#example",
+            data : {message : "Hello World"},
+            methods : {
+                sayHello:function() {
+                    this.message = "안녕";
+                    return this.message;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

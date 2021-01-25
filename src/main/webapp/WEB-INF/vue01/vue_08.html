@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue_08</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id = "example">
+        <select id="regions">
+            <option disabled="disabled" selected>지역을 선택하세요</option>
+            <option v-for="(val,key,i) in regions" v-bind:value="key">
+                {{i + 1}}:{{val}}
+            </option>
+        </select>
+    </div>
+    <script>
+        var regions = {
+            "A" : "Asia",
+            "B" : "America",
+            "C" : "Europe",
+            "D" : "Africa",
+            "E" : "Oceania"
+        };
+
+        var list = new Vue({
+            el : "#example",
+            data : {regions:regions}
+        });
+    </script>
+</body>
+</html>
