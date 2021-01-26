@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue02_07(lifeCycle)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+
+        /*
+        *   1. 뷰는 크게 creation(생성), mounting(로딩), updating(수정), destruction(소멸)
+        *       단계로 라이프 사이클을 가지고 있다.
+        *   + beforeCreate 이벤트 훅
+        *       : Vue 인스턴스가 생성되고 데이터에 대한 관찰 기능 및 이벤트 감시자 설정 전에 호출된다.
+        *   + created 이벤트 훅
+        *       : Vue 인스턴스가 생성된 후에 데이터에 대한 관찰 기능,
+        *           계산형 속성, 메소드, 감시자 설정이 완료된 후에 호출된다.
+        *   + beforeMount 이벤트 훅
+        *       : 마운트가 시작되기 전에 호출된다.
+        *   + mounted 이벤트 훅
+        *       : el에 vue 인스턴스의 데이터가 마운트 된 후에 호출된다.
+        *   + beforeUpdate 이벤트 훅
+        *       : 가상 DOM이 렌더링, 패치 되기 전에 데이터가 변경될 때 호출된다.
+        *           이 훅에서 추가적인 상태 변경을 수행할 수 있다.
+        *           하지만 추가로 다시 렌더링하지는 않는다.
+        *   + updated 이벤트 훅
+        *       : 데이터의 변경으로 DOM이 다시 렌더링 되고 패치된 후에 호출된다.
+        *           이 훅이 호출되었을 때는 이미 컴포넌트의 DOM이 업데이트 된 상태이다.
+        *           DOM에 종속성이 있는 연산을 이 단계에서 수행할 수 있다.
+        *   + beforeDestroy 이벤트 훅
+        *       : Vue 인스턴스가 제거되기 전에 호출된다.
+        *   + destroyed 이벤트 훅
+        *       : Vue 인스턴스가 제거된 후에 호출된다.
+        *           이 훅이 호출될 때는 Vue 인스턴스의 모든 디렉티브의
+        *           바인딩이 해제되고, 이벤트 연결도 모두 제거된다.
+        *
+        *   2. 인스턴스 라이프 사이클에 따른 기능 메소드
+        *   + 1) 인스턴스 생성(new Vue({})
+        *       + 인스턴스 및 라이프 사이클 초기화
+        *       + beforeCreate() 메소드 호출
+        *       + 화면에 반응성을 주입
+        *       + created() 메소드 호출 : 이벤트 저장공간에 데이터 전달
+        *       + el, template 속성 확인
+        *       + template 속성 내용을 render()로 변환처리
+        *       + beforeMount() 메소드 호출
+        *       + $el 생성 후, el 속성값 대입처리..
+        *       + mounted() 메소드 호출
+        *
+        *   + 2) 인스턴스 화면에 부착
+        *       + 인스턴스의 데이터 변경
+        *       + beforeUpdate() 메소드 호출
+        *       + 화면 재 렌더링 및 데이터 갱신
+        *       + updated() 메소드 호출
+        *
+        *   + 3) 인스턴스의 내용 갱신
+        *       + 인스턴스 접근 가능
+        *       + beforeDestroy() 메소드 호출
+        *       + 컴포넌트, 인스턴스, 디렉티브 등 모두 삭제
+        *       + destroyed()
+        *
+        *   + 4) 인스턴스 소멸
+        *
+        * */
+        $(document).ready(function(){
+
+            var vm = new Vue({
+                el : '#show',
+                data : {
+                    msg:'instance life Cycle',
+                    id:"",
+                    pass:""
+                },
+                created:function(){
+                    console.log('## 인스턴스 생성 ##');
+                },
+                beforeUpdate:function(){
+                    console.log("### 수정 직전 ###");
+                    console.log("아이디 : " + this.id);
+                    console.log("패스워드 : " + this.pass);
+                },
+                updated:function(){
+                    console.log("### 수정 이후 ###");
+                    console.log("아이디 : " + this.id);
+                    console.log("패스워드 : " + this.pass);
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3>
+        아이디 : <input type="text" v-model="id"><br>
+        패스워드 : <input type="password" v-model="pass"><br>
+        <span v-if="id=='abc' && pass=='1234' ">
+            <h2>로그인 성공</h2>
+            <h4>{{id}}님 환영합니다.</h4>
+        </span>
+    </div>
+</body>
+</html>

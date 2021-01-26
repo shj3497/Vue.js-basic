@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue02_06</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+
+        /*
+        *   일반적인 인터넷에서 회원가입시
+        *   패스워드를 입력하는 과정에서
+        *   패스워드 확인하는 과정 중 먼저 입력한 패스워드와
+        *   실시간으로 비교하여 일치여부를 확인해주는 경우가 있는데
+        *   이러한 것들이 Vue를 이용해서 watch를 써준건가 싶기도 함..
+        * */
+        $(document).ready(function() {
+
+            var vm = new Vue({
+                el:"#show",
+                data:{
+                    msg:"회원가입",
+                    id:"",
+                    idValid:"",
+                    pass:"",
+                    passValid:"",
+                    passFrm:"",
+                    passFrmValid:""
+                },
+                watch:{
+                    id:function(id){
+                        // id를 입력하는 순간 크기 check
+                        var len = id.length;
+                        if(len>=8 && len<=12){
+                            this.idValid=""; // 아무메시지도 표시 x
+                        }else{
+                            this.idValid="id는 8~12자"; // 메시지 표시
+                        }
+                    },
+                    pass:function(pass){
+                        var len =  pass.length;
+                        if(len == 4){
+                            this.passValid=""; // 아무메시지도 표시 x
+                        }else{
+                            this.passValid="4자리";
+                        }
+                    },
+                    passFrm:function(passFrm){
+                        if(this.pass == passFrm){
+                            this.passFrmValid = "";
+                        }else{
+                            this.passFrmValid = "일치하지않습니다.";
+                        }
+                    }
+                }
+
+            })
+
+        })
+
+
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3>
+        <table border>
+            <tr>
+               <th>아이디</th>
+                <td><input type="text" v-model="id"></td>
+                <span>{{idValid}}</span>
+            </tr>
+            <tr>
+                <th>패스워드</th>
+                <td><input type="password" v-model="pass"></td>
+                <span>{{passValid}}</span>
+            </tr>
+            <tr>
+                <th>패스워드 확인</th>
+                <td><input type="password" v-model="passFrm"></td>
+                <span>{{passFrmValid}}</span>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
