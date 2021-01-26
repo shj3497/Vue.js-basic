@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue02_05(watch)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:"#show",
+                data:{
+                    msg:"watch 속성 연습",
+                    num01:0,
+                    num02:0,
+                    sum:0
+                },
+                watch:{
+                    num01:function(num){
+                        // num : num01의 변경되는 모델 데이터...
+                        console.log("## num01 변경 ##");
+                        // 하위에 여러 기능 메소드를 통해서, 모델데이터 접근시, this.모델명
+                        // 하위에 여러 기능 메소드를 통해서, 다른 메소드 접근시, this.메소드명()
+                        var sum = Number(num) + Number(this.num02);
+                        this.sum = sum;
+                    },
+                    num02:function(num){
+                        console.log("## num02 변경 ##");
+                        var sum = Number(this.num01) + Number(num);
+                        this.sum = sum;
+                    }
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3><br>
+        num01 : <input v-model="num01"><br>
+        num02 : <input v-model="num02"><br>
+        덧셈 결과 : {{sum}}
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue02_03</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+        /*
+        *   1. methods
+        *       함수를 정의할 수 있는 속성으로 하위 선언 객체로
+        *       함수명 : function(){} 으로 선언되어 사용된다.
+        *       주로 이벤트나, 외부에서 호출하여 사용할 때가 많다.
+        *   2. computed
+        *       캐시 메모리를 쓰는 함수를 정의하는 속성으로 하위 선언객체로
+        *       함수명 : function(){}을 사용한다.
+        *   # methods의 속성을 이용한 함수처리
+        *   1. 기능 메소드를 통해서 함수의 return처리 하는것을 말한다.
+        * */
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el : "#show",
+                data : {
+                    msg:"methods 활용 예제",
+                    num01:0,   // placeholder 같은 초기값 의미
+                    num02:0    // placeholder 같은 초기값 의미
+                },
+                methods:{
+                    sum:function(){
+                        console.log("## 합산 함수 호출 ##");
+                        var num1 = Number(this.num01); // 여기서의 this.num01은 body태그에서 입력한 v-model=num01 값을 의미
+                        var num2 = Number(this.num02);
+                        return num1 + num2;
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3><br>
+        첫번째 숫자 : <input v-model="num01"><br>
+        두번째 숫자 : <input v-model="num02"><br>
+        <h4>{{num01}}+{{num02}} = {{sum()}}</h4>
+    </div>
+</body>
+</html>
