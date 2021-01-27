@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_04</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"삭제처리 process 확인"
+                },
+                methods:{
+                    goDelete:function(){
+                        if(!confirm("삭제하시겠습니까?")){
+                            /*
+                            event : js의 이벤트 전역변수
+
+                            이벤트 함수에서 e, window.event : js에서 전역변수
+                            window.event(event), e는 발생된 이벤트의 정보를 가지고 있다.
+                            target : 프로퍼티 등을 활용해 이벤트 대상을 반환할 수 있다.
+
+                            testnode.onclick = function(e){
+                                e = e || window.event;
+                            }
+                            사용방법 : 변수 선언에 있어서 해당하는 값이 있을 경우 값을 선언하고,
+                                        없는 경우에는 뒤의 값을 선언하게 된다.
+                            e || window.event : 크로스 브라우징
+
+                            IE에서는 e가 존재하지 않으므로 window.event를 사용한다.
+
+
+                            */
+                            event.preventDefault();
+                        }
+                    }
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3>
+        <a href="vue03_05(eventProp).html" @click="goDelete">삭제처리</a>
+    </div>
+</body>
+</html>

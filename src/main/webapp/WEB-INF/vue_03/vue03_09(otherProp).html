@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_09</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function(){
+
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"기타 이벤트 처리함수",
+                    favCnt:15
+                },
+                methods:{
+                    favorCntup:function(){
+                        //this.favCnt += 1
+                        this.favCnt = parseInt(this.favCnt) + 1
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <h2 @click="favorCntup">좋아요 click(계속)</h2>
+        <h2 @click.once="favorCntup">좋아요(한번만) click</h2>
+        <h4>좋아요 건수 : {{favCnt}}</h4>
+    </div>
+</body>
+</html>

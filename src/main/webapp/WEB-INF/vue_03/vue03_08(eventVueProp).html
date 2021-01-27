@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_07</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        #outer{
+            width:200px;height:200px;border:solid 2px black;
+            background-color:aqua;
+        }
+        #inner{
+            width:100px;height:100px;border:solid 1px green;
+            background-color:yellow;
+        }
+    </style>
+    <script type="text/javascript">
+        /*
+        * # 이벤트 전파 3단계(eventPhase)
+        *   1. 포착 1(CAPTURE_PHASE)
+        *   2. 이벤트 발생 2(AT_TARGET)
+        *   3. 버블링 3(BUBBLING)
+        * */
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"이벤트 전파와 버블링(stop속성) 예제"
+                },
+                methods:{
+                    outerClick:function(e){
+                        // e.eventPhase, e.currentTarget, e.taget
+                        console.log("## outer click ##");
+                        console.log("Event Phase:", e.eventPhase);
+                        console.log("Current Target:", e.currentTarget);
+                        console.log("Target :", e.target);
+                    },
+                    innerClick:function(e){
+                        console.log("## inner click ##");
+                        console.log("Event Phase:", e.eventPhase);
+                        console.log("Current Target:", e.currentTarget);
+                        console.log("Target :", e.target);
+                    }
+                }
+            })
+        })
+        /**
+         * # 처리결과 (stopPropagation)
+         * 1. 내부 div를 클릭했을 때.(stop.capture를 처리했을 때.)
+         *  1) 내부 이벤트 함수가 호출되지 않고, 외부이벤트 핸들러 함수가 호출 된다.
+         *      ## outer click
+         *      event phase : 1   - 이벤트 발생 포착 1 (CAPTURE_PHASE)
+         *      event target :  <div id="outer"
+         *      target : <div id="inner"
+         *
+         * 2. 외부 div를 클릭했을 때.
+         *  1) 이벤트 현재 대상 객체에서만 발생.
+         *      ## outer click
+         *      event phase : 2   - 이벤트 발생 2 (AT_TARGET)
+         *      current target : <div id="outer">
+         *      target : <div id="outer">
+         * */
+    </script>
+</head>
+<body>
+<div id="show">
+    <h3>{{msg}}</h3>
+    <!--
+        # 상하위 계층 구조의 요소에 이벤트 핸들러 각각 정의
+        @이벤트명.속성
+        1.  속성 : capture.stop : 들어올때 막음
+
+    -->
+
+    <div id="outer" @click.stop="outerClick">
+        <!--
+            뷰에서 지원하는 기능 속성값 정의
+            @이벤트명.속성
+            1. stop : 속성값 만으로도 e.stopPropagation() 메소드 처리효과를 가진다.
+                즉, event bubbling을 중지시켜준다.
+         -->
+        <div id="inner" @click.stop="innerClick">
+            inner
+        </div>
+        outer
+    </div>
+</div>
+</body>
+</html>

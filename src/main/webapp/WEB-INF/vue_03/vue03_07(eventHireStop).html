@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_07</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        #outer{
+            width:200px;height:200px;border:solid 2px black;
+            background-color:aqua;
+        }
+        #inner{
+            width:100px;height:100px;border:solid 1px green;
+            background-color:yellow;
+        }
+    </style>
+    <script type="text/javascript">
+        /*
+        * # 이벤트 전파 3단계(eventPhase)
+        *   1. 포착 1(CAPTURE_PHASE)
+        *   2. 이벤트 발생 2(AT_TARGET)
+        *   3. 버블링 3(BUBBLING)
+        * */
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"이벤트 전파와 버블링(stopPropagation) 예제"
+                },
+                methods:{
+                    outerClick:function(e){
+                        // e.eventPhase, e.currentTarget, e.taget
+                        console.log("## outer click ##");
+                        console.log("Event Phase:", e.eventPhase);
+                        console.log("Current Target:", e.currentTarget);
+                        console.log("Target :", e.target);
+                        // e.stopPropagation() : js:이벤트 상위로 전달 방지 처리하는 기능메서드
+                        e.stopPropagation(); // vue03_06.html 과의 차이점이 여기!
+                    },
+                    innerClick:function(e){
+                        console.log("## inner click ##");
+                        console.log("Event Phase:", e.eventPhase);
+                        console.log("Current Target:", e.currentTarget);
+                        console.log("Target :", e.target);
+                        e.stopPropagation();
+                    }
+                }
+            })
+        })
+        /**
+         * # 처리결과 (stopPropagation)
+         *  1. 내부 div를 클릭했을 때
+         *      1) 이벤트 전파 bubbling을 통해서, 두함수다 호출되어 출력되어야 하지만,
+         *          e.stopPropagation()이라는 함수로 이벤트 상위로 전달을 방지한다.
+         *          ## inner click
+         *           event phase : 2   - 이벤트 발생 2 (AT_TARGET)
+         *           current target : <div id="inner">
+         *           target : <div id="inner">
+         *  2. 외부 div를 클랙했을 때
+         *      1) 이벤트 현재 대상 객체에서만 발생
+         *          ## outer click
+         *           event phase : 2   - 이벤트 발생 2 (AT_TARGET)
+         *           current target : <div id="outer">
+         *           target : <div id="outer">
+         * */
+    </script>
+</head>
+<body>
+    <div id="show">
+        <h3>{{msg}}</h3>
+        <!-- # 상하위 계층 구조의 요소에 이벤트 핸들러 각각 정의 -->
+        <div id="outer" @click="outerClick">
+            <div id="inner" @click="innerClick">
+                inner
+            </div>
+            outer
+        </div>
+    </div>
+</body>
+</html>
