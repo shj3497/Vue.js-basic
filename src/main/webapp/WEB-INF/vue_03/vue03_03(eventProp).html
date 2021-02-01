@@ -10,28 +10,63 @@
         /**
          * # 이벤트 객체의 주요 공통 속성.
          *  1. target : 이벤트 요소
+         *      : 이벤트가 발생한 HTML 요소를 리턴한다.
          *  2. currentTarget : 이벤트 발생 대상
+         *      : 이벤트 리스너가 이벤트를 발생시키는 HTML 요소를 리턴한다.
          *  3. path : 객체로 거슬러 올라가는 경로를 나타낸다.
+         *      : 배열값, 이벤트 발생 HTML 요소로부터 document, window
+         *        객체까지 거슬러 올라가는 경로를 나타낸다.
          *  4. bubbles : 이벤트가 상위객체에 전달 여부를 나타낸다.
+         *      : 현재의 이벤트가 버블링을 일으키는 이벤트인지 여부를 리턴한다.
          *  5. cancelable : 기본 이벤트 방지 처리
+         *      : 기본 이벤트를 방지할 수 있는 여부를 리턴한다.
          *  6. defaultPrevented : 요소 객체가 가지고있는 내장된 이벤트의 방지여부를 나타낸다.
+         *      : 기본 이벤트가 방지되었는지 여부를 나타낸다.
          *      ex) a href : 이동처리, form : 페이지에 이동과 요청값 전달
          *  7. eventPhase : 흐름 단계
          *      포착, 이벤트 발생, 버블링
+         *  8. srcElement : IE에서 사용되는 속성으로 target과 동일한 속성이다.
          *
          * # 키보드 이벤트 관련 속성
-         *  1. altKey, shiftKey, ctrKey, metaKey(windows key, mac key),
-         *      key(이벤트키 값), code(키의 코드), keyCode, charCode, location
+         *  1.  altKey : ALT키가 눌러졌는지 여부 (true/false)
+         *      shiftKey : SHIFT 키가 눌러졌는지 여부 (true/false)
+         *      ctrlKey : CTRL 키가 눌러졌는지 여부 (true/false)
+         *      metaKey(windows key, mac key) : 메타키가 눌러졌는지 여부
+         *      key(이벤트키 값) : 이벤트에 의해 나타나는 키값을 리턴한다, 대소문자 구분함
+         *      code(키의 코드) : 이벤트를 발생시킨 키의 코드값을 리턴
+         *          ex) a를 누르면 : "KeyA" 리턴, Shift를 누르면 : "Shift"리턴
+         *      keyCode(키의 코드) : 이벤트를 발생시킨 키의 고유 키값(ascii 코드 값)을 리턴
+         *          ex) a를 누르면 : 65를 리턴! 단, 대소문자 구분하지 않고 리턴한다. a,A = 65
+         *      charCode : keypress 이벤트가 발생될 때 Unicode 캐릭터 코드를 리턴한다.
+         *      location : 디바이스에서의 키 위치값, 일반 키보드는 이 값이 모두 0 이다.
          *
          * # 마우스 이벤트 관련 속성
-         *  1. button, buttons, clientX, clientY, offsetX, offsetY, pageX, pageY
-         *      screenX, screenY
+         *  1.  button  : 이벤트를 발생시키는 마우스 버튼
+         *          0 : 마우스 왼쪽 버튼
+         *          1 : 마우스 휠
+         *          2 : 마우스 오른쪽 버튼
+         *      buttons : 마우스 이벤트가 발생한 후에 눌러지는 마우스 버튼 값을 리턴한다.
+         *          1 : 마우스 왼쪽 버튼
+         *          2 : 마우스 오른쪽 버튼
+         *          4 : 마우스 휠
+         *          8 : 4번째 마우스 버튼
+         *          16 : 5번째 마우스 버튼
+         *          ex) 마우스 오른쪽 버튼, 휠을 누르고 있는 상태에서 왼쪽 버튼을 클릭할 경우
+         *      clientX, clientY : 마우스 이벤트가 일어났을 때의 뷰포트(ViewPort)의 영역상의 좌표
+         *                         이 좌표는 스크롤 바를 내리더라도 좌푯값에 영향을 받지 않는다.
+         *      offsetX, offsetY : 마우스 이벤트가 발생한 HTML 영역에서의 좌표 (IE 브라우저 사용)
+         *      pageX, pageY     : 마우스 이벤트가 일어났을 때의 HTML 문서(Document) 영역에서의 좌표
+         *      screenX, screenY : 마우스 이벤트가 일어났을 때의 모니터 화면(Screen) 영역에서의 좌표
          *
          * # 이벤트 객체의 주요 메소드
          *  1. preventDefault() : 요소 객체가 가지고 있는 자체내 이벤트 방지처리.(js)
+         *                      : 기본 이벤트의 자동 실행을 중단시킨다.
          *  2. stopPropagation() : 이벤트를 포함하는 상위계층의 요소객체에 전달을 방지.
+         *                       : 이벤트 전파를 막는다.
          *
          * # 기타 Vue처리 이벤트
+         *  contextmenu : 과거에는 팝업메뉴라고 불렸지만 공식 명칭은 컨텍스트 메뉴이다.
+         *      브라우저 화면을 마우스 오른쪽 버튼을 클릭 했을 때 내장 컨텍스트 메뉴가 나타난다.
          *  v-on:contextmenu.prevent = "함수명"
          *  1. 전체 화면에서 오른쪽 마우스 클릭시, 처리한 내용을 함수에 정의하고, 호출 할 수 있게 한다.
          * */

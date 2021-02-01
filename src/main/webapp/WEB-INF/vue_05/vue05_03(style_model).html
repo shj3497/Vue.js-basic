@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_03</title>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+        .cls1{color: #f80000;background:yellow;}
+        .cls2{border:1px double #0000ff;}
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"v-model과 style의 적용",
+                    fntColor:'blue',
+                    style1:{color:'yellow', backgroundColor:'tomato'},
+                    style2:{border:'1px solid green'},
+                    style3:{color:'pink', backgroundColor:'navy'},
+                    ck01:false,
+                    ck02:false
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <h4 :style="{color:fntColor}">안녕하세요1</h4>
+        <h4 :stlye="style1">안녕하세요2</h4>
+        <h4 :style="[style2, style3]">안녕하세요3</h4>
+        <h4 :class="{cls1:true, cls2:true}">안녕하세요4</h4>
+        <h4 :class="{cls1:ck01, cls2:ck02}">안녕하세요5</h4>
+        <!--
+            cls1:ck01 >> : default값 false >> new Vue()에서 default값 지정
+            밑에 체크박스를 선택하면 true값으로 바뀌므로
+            style태그에서 지정한 css적용 가능해짐
+         -->
+        <!-- v-model = "모델속성" 입력값에 따라서 모델 값의 변경, 모델값이 변경에 따른
+            view 화면의 출력 directive, 속성이 변경...
+
+            v-model로 mapping된 input 입력 객체는 모델값에 영향을 미치고,
+            모델값의 true/false로 설정될 때, class 적용여부에 영향을 미친다.
+         -->
+        <input type="checkbox" v-model="ck01" value="true">클래스1 적용<br>
+        <input type="checkbox" v-model="ck02" value="true">클래스2 적용<br>
+        <h5>ck01:{{ck01}}, ck02:{{ck02}}</h5>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_05</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"computed와 class적용예제",
+                    score:0
+                },
+                computed:{
+                    info:function(){
+                        // 결과값에 따라서, class 적용여부를 json객체형태로 전달한다.
+                        if(this.score>=1 && this.score<=100){
+                            return{warning:false};
+                        }else{
+                            return{warning:true};
+                        }
+                    }
+                }
+            })
+        })
+
+    </script>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+        .score{border:solid 1px black;}
+        .warning{background-color:orange; color:purple;}
+        .warningimage{width:18px; height:18px; top:5px; position:relative;}
+    </style>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <p>1부터 100까지만 입력 가능합니다.</p>
+        <!-- 클래스가 info의 return으로 클래스 적용여부를 설정.. -->
+        점수 :
+        <input type="text" class="score" v-model="score" :class="info">
+        <img src="/testVue/src/main/webapp/img/error.png" class="warningimage" v-show="info.warning">
+    </div>
+</body>
+</html>

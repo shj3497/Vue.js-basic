@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_07</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="vue05_07.css">
+    <!-- 1. 공유 메모리 영역인 이벤트 버스 선언.. -->
+    <script type="text/javascript">
+        var eventBus = new Vue();
+    </script>
+    <!-- 2. 입력할 컴포넌트 선언 -->
+    <!-- input-template 선언 -->
+    <template id="input-template">
+        <div>
+            <!-- trim : 좌우 공백제거
+                 v-model.trim : v-model이 관리하는 input을 자동으로 trim 하기를 원한다면..
+             -->
+            <input class="input" type="text" id="task" v-model.trim="todo"
+                   placeholder="입력 후 엔터!" @keyup.enter="addTodo">
+            <span class="addbutton" @click="addTodo">추가</span>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Vue.component("input-component",{
+            template:"#input-template",
+            data:function(){
+                return {todo:""};
+            },
+            methods:{
+                addTodo:function(){
+                    alert("입력할 데이터:" + this.todo);
+                    // 이벤트버스에 할당 ???
+                    eventBus.$emit("add-todo", this.todo);
+                    this.todo=""; // 모델데이터 초기화 처리
+                }
+            }
+        })
+    </script>
+    <!-- list-template 선언 -->
+    <template id="list-template">
+        <ul id="todolist">
+            <li v-for="(sch, index) in todolist" :class="checked(sch.done)"
+                @click="doneToggle(index)">
+                <span>{{sch.todo}}</span>
+                <span v-if="sch.done">완료</span>
+                <span class="close" @click.stop="deleteTodo(index)">&#x00D7;</span> <!-- &#x00D7; : 하트 -->
+            </li>
+        </ul>
+    </template>
+    <script type="text/javascript">
+
+        Vue.component('list-component', {
+            template:'#list-template',
+            // 이벤트 버스로 추가 될때까지 기다렸다가 처리할 메소드(컴포넌트 생성시 선언)
+            created:function(){
+                // eventBus가 emit했을 때 받은 메소드.on("이벤트명", 처리할 이벤트함수)
+                eventBus.$on("add-todo", this.addTodo);
+            },
+            data:function(){
+                return {
+                    todolist:[
+                        {todo:"영화보기", done:false},
+                        {todo:"주말산책", done:false},
+                        {todo:"ES6 학습", done:false},
+                        {todo:"잠실야구장", done:false}
+                    ]
+                }
+            },
+            methods:{
+                // emit에서 넘겨준 매개값..
+                addTodo:function(val){
+                    // 모델의 todolist배열에 할당 {todo(속성):val(받은값)}
+                    this.todolist.push({todo:val, done:false});
+                    // list 바로 반영된다.
+                },
+                checked:function(done){
+                    if(done){
+                        return {checked:true};
+                    }else{
+                        return {checked:false};
+                    }
+                },
+                doneToggle:function(index){
+                    // index로 해당 todolist의 done true ==> false
+                    // false --> true로 처리..
+                    this.todolist[index].done =! this.todolist[index].done;
+                },
+                deleteTodo:function(index){
+                    // 배열.splice(시작, 개수)
+                    this.todolist.splice(index,1)
+                }
+
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"해야할 일 list(event Bus)"
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <div class="header">
+            <h3>{{msg}}</h3>
+            <!-- 추가할 일정 component 선언(input)-->
+            <input-component></input-component>
+        </div>
+        <!-- 추가된 list -->
+        <list-component></list-component>
+    </div>
+</body>
+</html>

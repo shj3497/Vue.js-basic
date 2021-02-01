@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        [v-cloak]{display:none;}
+    </style>
+    <title>Vue04_04</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <template id="tmp">
+        <!-- 배열형으로 온 데이터를 template안에서 반복처리한다. -->
+        <div>
+            <h2 v-for="fruit in fruits">{{fruit}}</h2>
+        </div>
+    </template>
+    <!-- template로 테이블 선언 -->
+    <template id="listTmp">
+        <table border>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>주소</th>
+            </tr>
+        <!--
+            컴포넌트에 선언 props가 contacts로 배열형으로 넘겨 주었을 때,
+            for 구문으로 list 처리가 가능하다.
+
+            board-reply 에서 c태그를 사용해서 반복문 처리를 해줬는데
+            Vue.js를 사용하면 Mybatis 에서 쿼리문을 실행한 결과값을
+            VO에 담아서 Spring 컴포넌트에서 jsp로 전달해주면 new Vue({})를 통해서
+            값을 전달받고, 사용자 정의태그(template)를 사용해서 body태그에 뿌려주면 되는건가..
+            그렇다면 정작 body태그에선 몇줄 쓸 필요 없이 template로 폼을 만들어주고
+            컴포넌트(Vue.Component({}) 를 통해서 데이터 전달만 한다?
+         -->
+            <tr v-for="contact in contacts">
+                <td>{{contact.no}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.tel}}</td>
+                <td>{{contact.address}}</td>
+            </tr>
+        </table>
+    </template>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            Vue.component("list",{
+                template:"#tmp",
+                props:{
+                    fruits:{type:Array}
+                }
+            });
+
+            Vue.component("info", {
+                template:"#listTmp",
+                props:{
+                    contacts:{type:Array}
+                }
+            })
+
+            var vm = new Vue({
+                el:"#show",
+                data:{
+                    msg:"객체형 배열 props 전달처리",
+                    list1:[
+                        {no:97,name:"홍길동",tel:"010-7777-7777",address:"서울시"},
+                        {no:98,name:"김길동",tel:"010-7777-7777",address:"서울시"},
+                        {no:99,name:"신길동",tel:"010-7777-7777",address:"서울시"},
+                        {no:100,name:"마길동",tel:"010-7777-7777",address:"서울시"}
+                    ]
+                }
+            })
+        })
+        /**
+         * # 배열을 속성으로 데이터를 전달할 때,
+         *  1. 데이터를 부모로 하위에 선언된 컴포넌트에 전달하여,
+         *      반복처리로 화면에 리스트를 뿌려준다.
+         *  2. 부모에서 배열형으로 데이터 전달 형식
+         *      1) <컴포넌트 속성="[배열형데이터...]">
+         *      2) Vue.component("사용자정의 태그명", {
+         *          template:"<template id="">값",
+         *          props:{
+         *              속성:{type:Array}
+         *          }
+         *      })
+         * */
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <list :fruits="['사과','바나나','딸기']"></list><!-- v-bind -->
+        <!--
+        info : 컴포넌트명
+         :contacts:컴포넌트명 props 속성
+        list1 : Vue 인스턴스의 모델데이터
+         -->
+        <info :contacts="list1"></info>
+    </div>
+</body>
+</html>

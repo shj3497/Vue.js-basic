@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_12</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        /*
+            화살표 방향에 따라서, 곰발바닥이 왼쪽 오른쪽 위 아래로 이동되게 처리하세요
+        */
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"키보드입력에 따라 움직이는 그림!",
+                    pos:{
+                        left:200,
+                        top:200
+                    }
+                },
+                methods:{
+                    go:function(e){
+                        if(e.keyCode == 37){
+                            this.pos.left -= 20;
+                            console.log("좌!!");
+                        }
+                        if(e.keyCode == 38){
+                            this.pos.top -= 20;
+                            console.log("상!!");
+                        }
+                        if(e.keyCode == 39){
+                            this.pos.left += 20;
+                            console.log("우!!");
+                        }
+                        if(e.keyCode == 40){
+                            this.pos.top += 20;
+                            console.log("하!!");
+                        }
+                        console.log(e.keyCode);
+                    }
+                }
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak @contextmenu.prevent="ctxStop">
+        <input type="text" @keydown="go" size="1" ><br>
+        <h3>{{msg}}</h3>
+        <!--
+            이동할 이미지 지정..
+            모델 데이터와 연동하기 위해선 vue 속성으로 지정하여야 한다.
+            left:pos.left + 'px', top:pos.top + 'px' : vue 인스턴스의
+            모델 데이터와 연결되어 있다.
+         -->
+        <img src = "/testVue/src/main/webapp/img/14당황.png"
+             :style="{position:'absolute',left:pos.left+'px',top:pos.top+'px'}">
+    </div>
+</body>
+</html>

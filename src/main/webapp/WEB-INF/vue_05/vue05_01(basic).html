@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_01</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"Style의 적용",
+                    chColor:'yellow'
+                },
+                methods:{
+                    changeColor:function(){
+                        this.chColor = "pink";
+                    }
+                }
+            })
+        })
+    /**
+     * # Vue에서 style 적용의 기본 형태
+     *  1. style 선언과, vue의 style적용의 비교
+     *      1) inline 요소객체 적용 비교
+     *      <요소객체 style="color:red; background-color:yellow">
+     *      <요소객체 :style={color:'red', backgroundColor:'yellow'}>
+     *      2) inline 요소 객체 클래스 적용 비교
+     *      <요소객체 class="클래스명 1 클래스명 2...">
+     *      <요소객체 :class="{클래스명 1:true, 클래스명 2:false}">
+     *      3) 위 선언언된 vue 형태의 style과 class의 속성, 속성값은 model데이터와 연동하여,
+     *      이벤트 처리함수에 의해서 동적으로 변경처리가 가능하다.
+     *      data:chColor:'red',
+     *      methods:{
+     *          changeColor:function(){
+     *              this.chColor:'blue';
+     *          }
+     *      }
+     *      <h1 :style="{backgroundColor:chColor}">안녕하세요</h1>
+     *      <input type="button" @click="changeColor"/>
+     * */
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <h2 :style="{backgroundColor:chColor}" @click="changeColor">안녕하세요</h2>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_02</title>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    // default값 지정 red, white
+                    msg:"뷰 스타일 기본 확인예제",
+                    fontColor: "red",
+                    bkColor: "white"
+                },
+                methods:{
+                    chColor:function(){
+                        this.fontColor = $('#ch01').val();
+                        this.bkColor = $('#ch02').val();
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        글자색 :
+        <select id="ch01">
+            <option>red</option>
+            <option>blue</option>
+            <option>green</option>
+        </select><br>
+        배경색 :
+        <select id="ch02">
+            <option>white</option>
+            <option>yellow</option>
+            <option>pink</option>
+        </select>
+        <input type="button" value="색상적용" @click="chColor">
+        <h2 :style="{color:fontColor, backgroundColor:bkColor}">안녕하세요!! style 연습입니다.</h2>
+    </div>
+</body>
+</html>

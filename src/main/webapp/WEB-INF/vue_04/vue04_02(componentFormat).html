@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue04_02</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        /*
+        script 태그에 코드를 지정해놓고, Vue.component 로
+        Vue.component("태그명", {template: 'script 문의 id값'});
+        로 불러온다.
+
+        Vue04_01은 스트링형태로 태그와 내용을 정의해놨는데
+        이러면 가독성이 떨어진다.
+        아래 td-comp를 보면 현재 template:이후 내용이 짧아서 그렇지
+        내용이 길어지면 가독성이 떨어질거임
+        */
+        $(document).ready(function(){
+            Vue.component("j-comp", {template:"#scTmp"});
+            Vue.component("opt-comp", {template:"#optTmp"});
+            Vue.component("td-comp", {template:'<td>데이터1</td>'});
+
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"Vue 세계에 오신것을 환영합니다."
+                }
+            });
+        });
+
+        /**
+         * # 여러가지 Component 처리 형식
+         *  1. javascript template 선언
+         *      script type="text/x-template" id="아이디명"
+         *          root 태그 내용..
+         *  2. 상하위 계층구조의 구성요소에 대한 template 선언과 활용
+         *      1) ul의 경우 li template 로 선언, tr의 경우 td/th template 로 선언할 경우..
+         *      2) 상위요소
+         *          기본 태그 is = '컴포넌트'
+         *          ex) <ul>
+         *                  <li is="li-comp">
+         *              <tr>
+         *                  <td is='td-comp'>
+         *                  <td is='td-comp'>
+         *      >> 결국 부모태그-자식태그(?)로 존재하는경우( ex) table-tr-td, ul-li, select-option 등..)
+         *          자식태그의 속성에 is = "컴포넌트명" 을 추가해줘서 사용해야한다는 것
+         * */
+    </script>
+
+    <script type="text/x-template" id="scTmp">
+        <h2>자바스크립트 탬플릿</h2>
+    </script>
+
+    <template id="optTmp">
+        <option>옵션 내용입니다.</option>
+    </template>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <j-comp></j-comp>
+        <h2>list 형식</h2>
+        <select>
+            <option is="opt-comp"></option>
+            <option is="opt-comp"></option>
+            <option is="opt-comp"></option>
+        </select>
+        <h2>테이블 형식</h2>
+        <table border>
+            <!--
+                td가 하위 컴포넌트일 때는 동일하게 td하고,
+                    is = "컴포넌트명"
+             -->
+            <tr><td is="td-comp"></td></tr>
+            <tr><td is="td-comp"></td></tr>
+            <tr><td is="td-comp"></td></tr>
+            <tr><td is="td-comp"></td></tr>
+            <tr><td is="td-comp"></td></tr>
+        </table>
+    </div>
+</body>
+</html>

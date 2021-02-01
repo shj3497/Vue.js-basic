@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue04_01</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 컴포넌트를 위한 템플릿 선언.. -->
+    <template id="tmp01">
+        <!-- 컴포넌트에 사용할 템플릿의 최상위 태그는 root태그(<div>) 단일로 처리하여야 한다.-->
+        <div>
+            <h2>마지막 정리하는 Vue</h2>
+            <p>안녕하세요!!안녕하세요!!안녕하세요!!안녕하세요!!안녕하세요!!
+                안녕하세요!!안녕하세요!!안녕하세요!!안녕하세요!!안녕하세요!!</p>
+        </div>
+        <!-- <div></div>:root태그가 두개이상이어서는 안된다.   -->
+    </template>
+    <script type="text/javascript">
+        /*
+            # 컴포넌트
+                1. Vue 컴포넌트는 작고 독립적인 코드 블럭을 조합하여, 효율적인 화면 구성을 합니다.
+                    레고 블럭을 조립하듯 컴포넌트 화면을 조작하여 화면구성을 처리합니다.
+                2. 컴포넌트는 가상 DOM을 원리로 생성하여 처리하는데, 가상 DOM을 활용하면 다음에
+                    나타날 화면의 일부를 미리 그려놓고 변경된 화면의 일부만 수정 처리하는 것을 말합니다.
+                3. 컴포넌트는 일단 선언하고, 이 선언된 컴포넌트를 태그형식으로 호출하여,
+                    이 조합된 컴포넌트들로 전체 웹 어플리케이션을 작성합니다.
+                4. 컴포넌트 선언 기본 형식
+                    1) Vue.component("요소이름정의", {옵션 설정});
+                        - 요소이름정의 : 컴포넌트를 사용할 사용자 정의 태그
+                        - 옵션 정의 : 컴포넌트를 구성할 template, 사용할 모델 데이터,
+                                     여러가지 형식의 함수
+        */
+
+
+      $(document).ready(function(){
+
+          // 1단계 바로 태그를 선언하고 활용처리
+          Vue.component("hello-component",{
+              template:"<div>hello component world!</div>"
+          });
+          Vue.component("greet",{
+              template:"<h1>안녕하세요~!</h1>"
+          });
+
+          // 2단계 상위에 template 태그로 선언하고, 속성 id를 설정한 후,
+          // 해당 id를 #아이디명을 호출하여 처리한다.
+          Vue.component("comp2", {
+              template:"#tmp01"
+          });
+
+          // 조상컴포넌트
+          var vm = new Vue({
+              el:'#show',
+              data:{
+                  msg:"Vue 세계에 오신걸 환영합니다."
+              }
+          });
+      });
+    </script>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+    </style>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <hello-component></hello-component>
+        <greet></greet>
+        <hello-component></hello-component>
+        <greet></greet>
+        <comp2></comp2>
+        <comp2></comp2>
+        <comp2></comp2>
+    </div>
+</body>
+</html>

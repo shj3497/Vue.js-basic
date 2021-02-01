@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue04_03</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- 템플릿 정의 id=tmp01 -->
+    <template id="tmp01">
+        <h3>{{message}}</h3>
+    </template>
+    <!-- 템플릿 정의 id=tmp02 -->
+    <template id="tmp02">
+        <h3>{{msg}} [{{cnt}}]</h3>
+    </template>
+    <script type="text/javascript">
+
+        /**
+         * # 컴포넌트 계층 구조 처리...
+         *  1. 컴포넌트는 body 태그를 최상위로 해서, 컴포넌트를 호출하여,
+         *      계층 구조상 하위의 컴포넌트를만들고, 해당 컴포넌트에 속성 props를
+         *      통해서 데이터를 전달할 수 있다.
+         *
+         * # 컴포넌트의 속성으로 데이터 전달
+         *  1. 컴포넌트는 부모 컴포넌트에서 자식컴포넌트에 속성으로 데이터를 전달 할 수 있다.
+         *  2. 기본형식
+         *      1) body 컴포넌트명  속성명 = '전달할 데이터'
+         *      2) 컴포넌트 선언
+         *          props : [속성명]
+         *      3) 컴포넌트의 템플릿
+         *          template
+         *              태그 {{속성명}} : directive 형식으로 받아서 처리도니다.
+         *  3. 여러가지 속성의 전달
+         *      1) 컴포넌트는 여러가지 속성을 선언하여, 전달 할 수 있다.
+         *          <컴포넌트명 속성1='전달할 데이터' 속성2='전달할데이터'>
+         *      2) 속성의 유형과 갯수에 따른 처리방식
+         *          props:{
+         *              속성1:{데이터유형, 필수여부, default:기본데이터},
+         *              속성2:{데이터유형, 필수여부, default:기본데이터},
+         *              속성3:{데이터유형, 필수여부, default:기본데이터},
+         *          }
+         *      ex)
+         *          props:{
+		 *		        message:{type:String, default:"안녕하세요!!"},
+		 *		        count:{type:Number, required:true},
+		 *		        countries:{type,Array,default:['한국']}
+		 *          }
+         * */
+
+        $(document).ready(function(){
+
+            Vue.component("list-comp", {
+                template:"#tmp01",
+                props:['message'] // 템플릿에서 사용될 속성값, 부모에서 전달
+            });                   // 부모컴포넌트에서 자식컴포넌트에게 전달
+                                  // 부모컴포넌트(body태그?)에서 전달받은 message='사과','바나나','딸기'
+                                  // <list-comp> 에서 전달받은 message를 #tmp01로 전달
+
+            Vue.component("list-comp2", {
+                template:'#tmp02',
+                props:{ // props : 부모 컴포넌트가 자식 컴포넌트에게 전달 할 때..
+                        // emit  : 자식 컴포넌트가 부모 컴포넌트에게 전달 할 때
+                    msg:{type:String, default:'안녕하세요'},
+                    cnt:{type:Number, default:0}
+                }
+            })
+
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"Vue세계 오신 것을 환영합니다"
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <list-comp message="사과"></list-comp>
+        <list-comp message="바나나"></list-comp>
+        <list-comp message="딸기"></list-comp>
+        <list-comp2 msg="안녕하세요~!! OoO!" cnt="4"></list-comp2>
+        <list-comp2></list-comp2>
+        <list-comp2 msg="반갑습니다."></list-comp2>
+        <list-comp2 msg="좋은 날입니다." cnt="3"></list-comp2>
+    </div>
+</body>
+</html>

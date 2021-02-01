@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue05_04</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"checkbox 클래스 적용 연습예제",
+                    cl1:false,
+                    cl2:false,
+                    cl3:false,
+                    cl4:false,
+                    cl5:false,
+                    cl6:false,
+                    cl7:false
+                }
+            })
+        })
+
+    </script>
+    <style type="text/css">
+        [v-cloak]{display:none;}
+        .cls1{background-color:red;}
+        .cls2{background-color:orange;}
+        .cls3{background-color:yellow;}
+        .cls4{background-color:green;}
+        .cls5{background-color:blue;}
+        .cls6{background-color:navy;}
+        .cls7{background-color:purple;}
+    </style>
+</head>
+<body>
+    <div id="show" v-cloak>
+        <h3>{{msg}}</h3>
+        <!--
+            v-model=""로 양방향 통신함
+            default값 Vue컴포넌트에서 받아온 value=false
+            체크박스를 선택하면 value=true
+         -->
+        <h3 :class="{cls1:cl1}"><input type="checkbox" v-model="cl1" value="true">빨</h3>
+        <h3 :class="{cls2:cl2}"><input type="checkbox" v-model="cl2" value="true">주</h3>
+        <h3 :class="{cls3:cl3}"><input type="checkbox" v-model="cl3" value="true">노</h3>
+        <h3 :class="{cls4:cl4}"><input type="checkbox" v-model="cl4" value="true">초</h3>
+        <h3 :class="{cls5:cl5}"><input type="checkbox" v-model="cl5" value="true">파</h3>
+        <h3 :class="{cls6:cl6}"><input type="checkbox" v-model="cl6" value="true">남</h3>
+        <h3 :class="{cls7:cl7}"><input type="checkbox" v-model="cl7" value="true">보</h3>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_10</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        /*
+        # 마우스 버튼 이벤트 수식서
+        1. 마우스 클릭한 후, 왼쪽 버튼 처리 수식:
+            @ mouseup.left = "이벤트 핸들러"
+        2. 마우스 클릭한 후, 오른쪽 버튼 처리 수식:
+            @ mouseup.right = "이벤트 핸들러"
+
+        # vue에서 css 속성과 model 데이터 연동처리
+        1. 모델 데이터와 css 속성을 연동하면, 동적인 화면 처리가 가능해진다.
+        2. vue에서 inline으로 css 속성 설정.
+            1) 기본 style 처리
+            <요소객체 style="속성:속성값; 속성:속성값">
+            2) vue 처리
+            <요소객체 style="{속성:속성값, 속성:속성값}"
+        3. style을 json 객체 형태로 속성을 설정할 수 있기때문에
+            각각의 속성:속성값을 모델명과 mapping하여 처리할 수 있다.
+
+        */
+        $(document).ready(function(){
+            var vm = new Vue({
+                el : '#show',
+                data : {
+                    msg:"마우스 이벤트 처리",
+                    pos:{left:100, top:100}
+                },
+                methods:{
+                    ctxStop:function(){},
+                    leftMouse:function(){
+                        // 이벤트 핸들러 통해서 모델데이터 변경처리.
+                        // css 속성을 가지고 조절?
+                        this.pos.left = this.pos.left - 30;
+                        console.log("왼쪽으로 30");
+                    },
+                    rightMouse:function(){
+                        this.pos.left += 30;
+                        console.log("오른쪽으로 30");
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak @contextmenu.prevent="ctxStop"
+        @mouseup.left="leftMouse" @mouseup.right="rightMouse">
+        <h3>{{msg}}</h3>
+        <!--
+            이동할 이미지 지정..
+            모델 데이터와 연동하기 위해선 vue 속성으로 지정하여야 한다.
+            left:pos.left + 'px', top:pos.top + 'px' : vue 인스턴스의
+            모델 데이터와 연결되어 있다.
+         -->
+        <img src = "/testVue/src/main/webapp/img/14당황.png"
+             :style="{position:'absolute',left:pos.left+'px',top:pos.top+'px'}">
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue03_11</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+
+        /*
+        # key 이벤트 수식어
+        1. 키를 입력했을 때, 이벤트 처리하는 수식을 말한다.
+            1) @keyup = "이벤트 핸들러"
+            2) @keyup.이벤트 수식 = "이벤트 핸드러"
+                - 이벤트 수식어
+                .enter, .tab, .delete, .space
+                .13, .37, .38
+                ex) @keyup.enter = "search"
+                    >> keyup : 키보드를 누르면
+                    >> .enter : 키보드 엔터를 누르면
+                    >> = "search" search 함수를 실행한다.
+        2. 이벤트 핸들러 처리 내용
+            1) e.keyCode : 키보드의 코드 코드값을 가져온다.
+                ex) 13(enter), 화살표 왼쪽부터 시계방향 37, 38, 39, 40
+
+       */
+
+        $(document).ready(function(){
+            var vm = new Vue({
+                el:'#show',
+                data:{
+                    msg:"마우스이벤트 처리",
+                    pos:{
+                        left:200,
+                        top:200
+                    },
+                },
+                methods:{
+                    ctxStop:function(){},
+                    leftMouse:function(){
+                        this.pos.left -= 30;
+                        console.log("왼쪽으로 30!");
+                    },
+                    rightMouse:function(){
+                        this.pos.left += 30;
+                        console.log("오른쪽으로 30!");
+                    },
+                    search:function(e){
+                        alert(e.keyCode);
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="show" v-cloak @contextmenu.prevent="ctxStop"
+        @mouseup.left="leftMouse" @mouseup.right="rightMouse">
+        핸들러 호출 후 코드값 처리 : <input type="text" @keyup="search"><br>
+        속성으로 핸들러 호출 처리(enter) : <input type="text" @keyup.enter="search"><br>
+        속성으로 핸들러 호출 처리(37) : <input type="text" @keyup.37="search"><br>
+        <h3>{{msg}}</h3>
+        <img src = "/testVue/src/main/webapp/img/14당황.png"
+             :style="{position:'absolute',left:pos.left+'px',top:pos.top+'px'}">
+    </div>
+</body>
+</html>
